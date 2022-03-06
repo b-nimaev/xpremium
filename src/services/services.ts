@@ -8,6 +8,17 @@ const dbname = process.env.DB_NAME;
 let uri = <string>process.env.DB_CONN_STRING;
 const client = new MongoClient(uri);
 
+async function run () {
+  try {
+    await client.connect()
+    console.log("database is work")
+  } catch (err) {
+    console.log(err)
+  }
+}
+run()
+
+
 export async function experimenalGetSubscribers(ctx: context) {
   let message = "Секция: Подписчики \n";
   let cursor = await client
@@ -100,8 +111,6 @@ async function inbox(ctx: context) {
 export async function getProposals() {
   try {
 
-    await client.connect()
-
     let props = client.db(dbname).collection("proposals");
     let count = await props.countDocuments();
     let array = await props.find({ subscription: false }).toArray();
@@ -117,8 +126,6 @@ export async function getProposals() {
 
 export async function checkUser(ctx) {
   try {
-    
-    await client.connect();
 
     let collection = client.db(dbname).collection("users");
     let document = await collection.findOne({ id: ctx.from.id });
@@ -134,8 +141,6 @@ export async function checkUser(ctx) {
 
 export async function checkPropsOnExist(ctx) {
   try {
-
-    await client.connect();
 
     let collection = client.db(dbname).collection("proposals");
     let document = await collection.findOne({ id: ctx.from.id });
@@ -156,8 +161,6 @@ export async function checkPropsOnExist(ctx) {
 
 export async function getSubscribers(chat_id: number) {
   try {
-
-    await client.connect()
     
     return await client
       .db(dbname)
@@ -171,7 +174,6 @@ export async function getSubscribers(chat_id: number) {
 
 export async function setProposal(proposal: proposal) {
   try {
-    await client.connect();
     return await client
       .db(dbname).collection("proposals").insertOne(proposal)
   } catch (err) {

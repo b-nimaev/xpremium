@@ -20,25 +20,26 @@ if (token === undefined) {
 const bot = new Telegraf<context>(token);
 
 bot.start(async (ctx: context) => {
-  console.log(ctx.wizard);
+  console.log('check user');
 })
 
 bot.use(session());
 bot.use(controller.middleware());
 
-const secretPath = `/secret-path/tg/${bot.secretPathComponent()}`;
+const secretPath = `/tg/${bot.secretPathComponent()}`;
 
 if (process.env.mode === "development") {
-  localtunnel({ port: 443 }).then(result => {
+  localtunnel({ port: 3000 }).then(result => {
     bot.telegram.setWebhook(`${result.url}${secretPath}`)
     // bot.telegram.deleteWebhook();
   })
-} else {
-  bot.telegram.setWebhook(`//tgstat.say-an.ru${secretPath}`)
 }
 
 const app = express();
+app.get("/", (req, res) => {
+  res.send("hello")
+})
 app.use(bot.webhookCallback(secretPath));
-app.listen(443, () => {
+app.listen(3000, () => {
   console.log("Telegram bot launched");
 });
