@@ -2,30 +2,30 @@ import { Composer, Scenes } from "telegraf";
 import { config } from "dotenv";
 
 import { bot } from "../..";
-import context from "../../types";
-import { checkPropsOnExist, getUsers } from "../../services";
+import context from "../../types/types";
+import { checkPropsOnExist, getUsers } from "../../services/services";
 
-import Greeting from "./components/greeting";
-import Messages from "./components/messages";
-import Keyboard from "./components/keyboard";
+import Greeting from "./steps/greeting";
+import Messages from "../../components/Messages";
+import Keyboard from "../../components/Keyboard";
 
-import renderPaymentSection from "./components/renderPaymentSection";
-import renderConfirmSection from "./components/renderConfirmSection";
+import renderPaymentSection from "./steps/renderPaymentSection";
+import renderConfirmSection from "./steps/renderConfirmSection";
 
-import inboxMessages from "./components/dashboard/inboxMessages";
+import inboxMessages from "./steps/dashboard/inboxMessages";
 
 /**
  * Wizard steps of scene
  */
 
-import confirm from "./components/confirm"
+import confirm from "./steps/confirmation"
 
 config();
 const bot_id = process.env.BOT_ID
 const handler = new Composer<context>(); // 0
 const payment = new Composer<context>(); // 1 секция выбора платежки
 const confirmationPayment = new Composer<context>(); // 2 секция платежа
-import confirmationPaymentData from "./components/confirmation" // 3 секция подтверждения платежа
+import confirmationPaymentData from "./steps/confirmation" // 3 секция подтверждения платежа
 const dashboard = new Composer<context>(); // 4 
 
 const home = new Scenes.WizardScene(
@@ -33,7 +33,7 @@ const home = new Scenes.WizardScene(
   handler,
   payment,
   confirmationPayment,
-  confirmationPaymentData,
+  confirmationPaymentData.step,
   dashboard
 );
 
@@ -151,10 +151,7 @@ payment.on("message", async (ctx) => renderPaymentSection(ctx));
 confirmationPayment.on("message", async (ctx) => renderConfirmSection(ctx));
 confirmationPayment.action("paymentConfirm", async (ctx) => confirmationMessageSection(ctx));
 confirmationPayment.action("back", async (ctx) => renderPaymentSection(ctx));
-/*
-confirmationMessage.on("message", async (ctx) => grabData(ctx));
-confirmationMessage.action("back", async (ctx) => renderPaymentSection(ctx));
-*/
+
 handler.on("message", async (ctx) => Greeting(ctx));
 
 // dashboard.hears(/\/select (\w+)/, async (ctx) => {

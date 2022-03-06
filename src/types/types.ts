@@ -1,5 +1,4 @@
 import { Context, Scenes } from "telegraf";
-import { Chat } from "typegram";
 
 interface MyWizardSession extends Scenes.WizardSessionData {
     myWizardSessionProp: number,

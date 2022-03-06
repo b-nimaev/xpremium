@@ -4,12 +4,12 @@ import localtunnel = require("localtunnel");
 
 // Телеграф
 import { Telegraf, session } from "telegraf";
-import Context from "./types";
-import controller from "./controller";
+import Context from "./types/types";
+import controller from "./controller/controller";
 
 // Переменные окружения
 import * as dotenv from "dotenv";
-import { getUsers, getSubscriptions } from "./services";
+import { getUsers, getSubscriptions } from "./services/services";
 
 dotenv.config();
 let token = process.env.BOT_TOKEN,

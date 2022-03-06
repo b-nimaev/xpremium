@@ -1,4 +1,4 @@
-export function getTime(timestmap) {
+export default function getTime(timestmap: number) {
   let date = new Date(timestmap * 1000);
   let hours = "0" + date.getHours();
   let minutes = "0" + date.getMinutes();

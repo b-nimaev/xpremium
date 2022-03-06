@@ -1,6 +1,6 @@
-import Context from "../../../types";
-import Messages from "./messages";
-import Keyboard from "./keyboard";
+import Context from "../../../types/types";
+import Messages from "../../../components/Messages";
+import Keyboard from "../../../components/Keyboard";
 
 export default async (ctx: Context) => {
   try {

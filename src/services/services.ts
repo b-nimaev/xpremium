@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb";
 import { config } from "dotenv";
-import context from "./types";
+import context from "../types/types";
 
 config();
 const dbname = process.env.DB_NAME;

@@ -1,8 +1,7 @@
-import { createImportSpecifier } from "typescript";
-import { checkUser, getProposals } from "../../../../services";
-import context from "../../../../types";
-import { getTime } from "../../inc";
-import keyboard from "../keyboard";
+import { checkUser, getProposals } from "../../../../services/services";
+import context from "../../../../types/types";
+import keyboard from "../../../../components/Keyboard";
+import timeConverter from "../../../../includes/timeConverter";
 
 export default async function (ctx: context) {
   try {
@@ -19,7 +18,7 @@ export default async function (ctx: context) {
         }
 
         message += `First name: ${element.first_name} \n`;
-        message += `Date: ${getTime(element.time)} \n`;
+        message += `Date: ${timeConverter(element.time)} \n`;
         message += `Plans: ${element.plan} \n`;
         message += `ID: ${element.id} \n`;
         message += `Language: ${element.language_code} \n\n`;

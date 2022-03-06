@@ -1,7 +1,7 @@
 import { Scenes } from 'telegraf'
-import Context from './types'
+import Context from '../types/types'
 
-import home from './controller/home'
+import home from './home'
 
 let controller = new Scenes.Stage<Context>(
     [ home ],
