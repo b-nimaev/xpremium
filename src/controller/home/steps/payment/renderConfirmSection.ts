@@ -1,8 +1,9 @@
-import Context from '../../../types/types'
-import Messages from '../../../components/Messages'
-import Keyboard from '../../../components/Keyboard'
+import { context as Context } from '../../../../types/types'
+import Messages from '../../../../components/Messages'
+import Keyboard from '../../../../components/Keyboard'
 
 export default async function (ctx: Context) {
+
   if (ctx.message) {
     if (ctx.session.payment == "crypto") {
       ctx.reply(Messages.crytoPaymentMessage, {
@@ -37,6 +38,7 @@ export default async function (ctx: Context) {
         ...Keyboard.confirmPayment,
       });
     }
+    ctx.wizard.selectStep(2)
     ctx.answerCbQuery();
   }
 }

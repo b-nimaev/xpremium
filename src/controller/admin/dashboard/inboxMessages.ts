@@ -1,7 +1,7 @@
-import { checkUser, getProposals } from "../../../../services/services";
-import context from "../../../../types/types";
-import keyboard from "../../../../components/Keyboard";
-import timeConverter from "../../../../includes/timeConverter";
+import { checkUser, getProposals } from "../../../services/services";
+import { context } from "../../../types/types";
+import keyboard from "../../../components/Keyboard";
+import timeConverter from "../../../includes/timeConverter";
 
 export default async function (ctx: context) {
   try {

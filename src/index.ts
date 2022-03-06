@@ -1,40 +1,41 @@
 // Прокси
+import * as localtunnel from "localtunnel";
 import * as express from "express";
-import localtunnel = require("localtunnel");
 
 // Телеграф
 import { Telegraf, session } from "telegraf";
-import Context from "./types/types";
+import { context } from "./types/types";
 import controller from "./controller/controller";
 
 // Переменные окружения
 import * as dotenv from "dotenv";
-import { getUsers, getSubscriptions } from "./services/services";
 
 dotenv.config();
-let token = process.env.BOT_TOKEN,
-  bot_id = process.env.BOT_ID;
+let token = process.env.BOT_TOKEN
 
 if (token === undefined) {
   throw new Error("Токен не действителен");
 }
 
-export const bot = new Telegraf<Context>(token);
+const bot = new Telegraf<context>(token);
 
-bot.on("channel_post", async (ctx) => {
-  let users = await getSubscriptions();
-  users.forEach((element) => {
-    ctx.copyMessage(element.id);
-  });
-});
+bot.start(async (ctx: context) => {
+  console.log(ctx.wizard);
+})
 
 bot.use(session());
 bot.use(controller.middleware());
 
-const secretPath = `/sq/${bot.secretPathComponent()}`;
-localtunnel({ port: 443 }).then((result) => {
-  bot.telegram.setWebhook(`${result.url}${secretPath}`);
-});
+const secretPath = `/secret-path/tg/${bot.secretPathComponent()}`;
+
+if (process.env.mode === "development") {
+  localtunnel({ port: 443 }).then(result => {
+    bot.telegram.setWebhook(`${result.url}${secretPath}`)
+    // bot.telegram.deleteWebhook();
+  })
+} else {
+  bot.telegram.setWebhook(`//tgstat.say-an.ru${secretPath}`)
+}
 
 const app = express();
 app.use(bot.webhookCallback(secretPath));

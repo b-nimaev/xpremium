@@ -1,6 +1,6 @@
-import Context from '../../../types/types'
-import Messages from '../../../components/Messages'
-import Keyboard from '../../../components/Keyboard'
+import { context as Context } from '../../../../types/types'
+import Messages from '../../../../components/Messages'
+import Keyboard from '../../../../components/Keyboard'
 
 export default function renderPaymentSection(ctx: Context) {
   if (ctx.session.single == "crypto") {

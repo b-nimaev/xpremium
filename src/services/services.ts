@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb";
 import { config } from "dotenv";
-import context from "../types/types";
+import { context, proposal } from "../types/types";
 
 config();
 const dbname = process.env.DB_NAME;
@@ -8,17 +8,7 @@ const dbname = process.env.DB_NAME;
 let uri = <string>process.env.DB_CONN_STRING;
 const client = new MongoClient(uri);
 
-async function run() {
-  try {
-    await client.connect();
-    console.log("Connected to db!");
-  } catch (error) {
-    console.log(error);
-  }
-}
-run();
-
-export async function getSubscribers(ctx: context) {
+export async function experimenalGetSubscribers(ctx: context) {
   let message = "Секция: Подписчики \n";
   let cursor = await client
     .db(dbname)
@@ -107,61 +97,11 @@ async function inbox(ctx: context) {
   return keyboard;
 }
 
-export async function getUsers(user?: number) {
-  if (user) {
-    try {
-      return await client.db(dbname).collection("users").findOne({ id: user });
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  let users = await client.db(dbname).collection("users").find().toArray();
-  return users;
-}
-
-export async function sendInvoice(data) {
-  try {
-    let document = await client
-      .db(dbname)
-      .collection("proposals")
-      .insertOne(data);
-    /*
-    if (document) {
-      data.plan.forEach(async (element) => {
-        if (document.plan.indexOf(element) == -1) {
-          let array = document.plan;
-          array.push(element);
-
-          await client
-            .db(dbname)
-            .collection("proposals")
-            .updateOne(
-              {
-                id: data.id,
-              },
-              {
-                $set: {
-                  plan: array,
-                },
-              },
-              {
-                upsert: true,
-              }
-            );
-        }
-      });
-    } else {
-      await client.db(dbname).collection("proposals").insertOne(data);
-    }
-    */
-  } catch (err) {
-    console.log(err);
-  }
-}
-
 export async function getProposals() {
   try {
+
+    await client.connect()
+
     let props = client.db(dbname).collection("proposals");
     let count = await props.countDocuments();
     let array = await props.find({ subscription: false }).toArray();
@@ -177,6 +117,9 @@ export async function getProposals() {
 
 export async function checkUser(ctx) {
   try {
+    
+    await client.connect();
+
     let collection = client.db(dbname).collection("users");
     let document = await collection.findOne({ id: ctx.from.id });
     if (document) {
@@ -191,6 +134,9 @@ export async function checkUser(ctx) {
 
 export async function checkPropsOnExist(ctx) {
   try {
+
+    await client.connect();
+
     let collection = client.db(dbname).collection("proposals");
     let document = await collection.findOne({ id: ctx.from.id });
 
@@ -208,15 +154,27 @@ export async function checkPropsOnExist(ctx) {
   }
 }
 
-export async function getSubscriptions() {
+export async function getSubscribers(chat_id: number) {
   try {
-    let result = await client
+
+    await client.connect()
+    
+    return await client
       .db(dbname)
-      .collection("proposals")
-      .find({ subscription: true })
+      .collection("subscribers")
+      .find({ "chat_id": chat_id })
       .toArray();
-    return result;
   } catch (err) {
     console.log(err);
+  }
+}
+
+export async function setProposal(proposal: proposal) {
+  try {
+    await client.connect();
+    return await client
+      .db(dbname).collection("proposals").insertOne(proposal)
+  } catch (err) {
+    console.log(err)
   }
 }
