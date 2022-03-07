@@ -6,13 +6,13 @@ interface MyWizardSession extends Scenes.WizardSessionData {
 
 interface MySession extends Scenes.WizardSession<MyWizardSession> {
     mySessionProp: number,
-    payment: string,
-    single: string,
     lastUpdate: number,
     cursor: number
 }
 
 export default interface context extends Context {
+    payment: string,
+    plan: string,
     session: MySession
     scene: Scenes.SceneContextScene<context, MyWizardSession>
     wizard: Scenes.WizardContextWizard<context>

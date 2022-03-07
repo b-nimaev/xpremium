@@ -1,18 +1,32 @@
+export let title = {
+  forex: 'Forex signals - 49$ per month',
+  crypto: 'Crypto signals - 49$ per month',
+  copy: 'Copy signals - 149$ per month',
+}
+
+let confirmationMessage = "<b>Send in chat proof of payment. It can be a screenshot, payment ID or something that will confirm your payment.</b>"
+
 export default {
   greetingMessage: `In order to become a member of premium signals, you need to choose which subscription you need. Daily receipt of 5 to 10 signals!\n\n By purchasing our signals, you get access to trading strategies that are a guaranteed guarantee of your success! If our signals do not bring you profit, we will return the funds!\n\n Choose from the list below 👇`,
+  adminGreetingMessage: `<b>Admin section</b>\n\n`,
 
-  forexSignalsMessage: `
-<b>Forex signals - 49$ per month</b>
+  forex: `
+    <b>${title.forex}</b>
     \nQuality and proven forex/gold/indices signals. The percentage of successful trades is about 90%, the monthly pips plan is 3000. Intraday and scalping deals
     \nSelect a payment method 👇
     `,
 
-  cryptoSignalsMessage: `
-    <b>Crypto signals - 49$ per month</b>
+  crypto: `
+    <b>${title.crypto}</b>
     \nQuality and proven crypto signals. Intraday signals, with levarage. Futures + spot deals. Access to futures trading signals like Binance, okex, bybit, huobi.
     `,
 
-  crytoPaymentMessage: `
+  copy: `
+    <b>${title.copy}</b>
+    \nCopy forex signals on your forex account. Any brokers. Minimum deposit - 2000$. No split or profit share. Copying with stop loss and take profit. With all sell and buy limits.
+    `,
+
+  cryptoPay: `
 Crypto \n
 Wallet: USDT
 Address: <code>TPXqExfPbXBWjum98PsHuJ916b9EkQKPN2</code>
@@ -27,21 +41,21 @@ Wallet: BTC
 Address: <code>bnb136ns6lfw4zs5hg4n85vdthaad7hq5m4gtkgf23</code>
 Network: Binance Chain (BEP2)
 MEMO: 364451047 \n
-<b>*You can click on address and it will copy to your clipboard</b>
+<b>*You can click on address and it will copy to your clipboard</b> \n\n${confirmationMessage}
 `,
-  skrillPaymentMessage: `
+  skrill: `
 <b>Skrill</b> \n
 Email: sergeisemenovfx@gmail.com
-Fees: make sure you send 7.5% more than the subscription amount. If you send less, you will not receive a subscription.
+Fees: make sure you send 7.5% more than the subscription amount. If you send less, you will not receive a subscription. \n\n${confirmationMessage}
 `,
 
-  paymentVisaMC: `
+  card: `
 <b>Visa & MasterCard</b>
 
 Method: you must register on the site wise.com 
 Fees:  make sure you send 2% more than the subscription amount. If you send less, you will not receive a subscription.
 
-Detailed instructions can be found at this link - Click on me to get video-instructions (http://www.youtube.com/watch?v=IZtLF0nhqFc)`,
+Detailed instructions can be found at this link - Click on me to get video-instructions (http://www.youtube.com/watch?v=IZtLF0nhqFc) \n\n${confirmationMessage}`,
 
   FAQMessage: `
 <b>Frequently asked questions:</b>\n
@@ -51,7 +65,4 @@ Detailed instructions can be found at this link - Click on me to get video-instr
 🔸  Keep track of the general channel @xsignals_success that provides weekly free signals.\n
 ❓ I have no experience in this area at all, can I start trading on your signals?
 🔸 We provide signals for access to save you time on learning all the nuances. Experts are always in touch and are ready to provide detailed instructions for opening trades based on signals. For any questions, you can contact @bestsignalsadmin`,
-
-  confirmationMessage:
-    "<b>Send in chat proof of payment. It can be a screenshot, payment ID or something that will confirm your payment.</b>",
 };

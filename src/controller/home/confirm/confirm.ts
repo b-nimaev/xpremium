@@ -1,10 +1,20 @@
-import { context, proposal } from "../../../../types/types";
-import keyboard from "../../../../components/Keyboard";
+import { proposal } from "../../../types/types";
 
-export default async function checkConfirmationData(ctx: context) {
+let keyboard = {
+  reply_markup: {
+    inline_keyboard: [
+      [{ text: "confirm", callback_data: "confirm" }],
+      [{ text: "« back", callback_data: "back" }]
+    ]
+  }
+}
+
+export default async function checkConfirmationData(ctx) {
   let message = ``;
   let data: proposal = {
-    plan: ctx.session.single,
+    id: ctx.from.id,
+    username: ctx.from.username,
+    plan: ctx.session.plan,
     payment: ctx.session.payment,
     subscription: false,
     date: ctx.message.date,
@@ -19,19 +29,18 @@ export default async function checkConfirmationData(ctx: context) {
   if (data.confirmation.document) {
     ctx.replyWithDocument(data.confirmation.document["file_id"], {
       caption: ctx.message["caption"],
-      ...keyboard.confirm,
+      keyboard,
     });
   }
 
   if (data.confirmation.photo) {
-    console.log(ctx.message);
     ctx.replyWithPhoto(ctx.message["photo"][0].file_id, {
       caption: ctx.message["caption"],
-      ...keyboard.confirm,
+      keyboard,
     });
   }
 
   if (data.confirmation.message["text"]) {
-    ctx.reply(ctx.message["text"], { ...keyboard.confirm });
+    ctx.reply(ctx.message["text"], { keyboard });
   }
 }

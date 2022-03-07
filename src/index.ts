@@ -3,12 +3,17 @@ import * as localtunnel from "localtunnel";
 import * as express from "express";
 
 // Телеграф
-import { Telegraf, session } from "telegraf";
-import { context } from "./types/types";
-import controller from "./controller/controller";
 
+import { Telegraf, session, Scenes } from "telegraf";
+import { context } from "./types/types";
+
+// Handler factories
+const { enter, leave } = Scenes.Stage
 // Переменные окружения
 import * as dotenv from "dotenv";
+
+import home from "./controller/home/home";
+import admin from "./controller/admin";
 
 dotenv.config();
 let token = process.env.BOT_TOKEN
@@ -16,15 +21,14 @@ let token = process.env.BOT_TOKEN
 if (token === undefined) {
   throw new Error("Токен не действителен");
 }
-
 const bot = new Telegraf<context>(token);
-
-bot.start(async (ctx: context) => {
-  console.log('check user');
+let stage = new Scenes.Stage<context>([home, admin], {
+  default: 'home'
 })
 
 bot.use(session());
-bot.use(controller.middleware());
+bot.use(stage.middleware());
+
 
 const secretPath = `/tg/${bot.secretPathComponent()}`;
 

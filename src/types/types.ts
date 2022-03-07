@@ -7,10 +7,11 @@ interface MyWizardSession extends Scenes.WizardSessionData {
 }
 
 interface MySession extends Scenes.WizardSession<MyWizardSession> {
-  mySessionProp: number;
+  plan: string;
   payment: string;
-  single: string;
+  mySessionProp: number;
   proposal?: proposal;
+  proposals: any;
   cursor: number;
 }
 
@@ -21,6 +22,8 @@ interface context extends Context {
 }
 
 interface proposal {
+  id: number;
+  username?: string;
   plan: string;
   payment: string;
   subscription: boolean;
