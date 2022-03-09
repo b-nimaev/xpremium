@@ -1,5 +1,0 @@
-import { Scenes } from 'telegraf'
-import { bot } from '..'
-import { context } from '../types/types'
-import admin from './admin'
-import home from './home/home'

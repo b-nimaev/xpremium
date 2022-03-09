@@ -10,6 +10,11 @@ let extra =  {
 let message = '<b>Personal Area\nYour subscription: no active subscription</b>'
 
 export default async function (ctx) {
-  ctx.answerCbQuery();
-  ctx.editMessageText(message, extra);
+  if (ctx.message) {
+    ctx.reply(message, extra)
+  } else {
+    ctx.answerCbQuery();
+    ctx.editMessageText(message, extra);
+  }
+  ctx.wizard.selectStep(4)
 }

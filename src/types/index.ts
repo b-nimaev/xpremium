@@ -1,19 +1,33 @@
 import { Context, Scenes } from "telegraf";
+import { Message, User } from "telegraf/typings/core/types/typegram";
 
 interface MyWizardSession extends Scenes.WizardSessionData {
-    myWizardSessionProp: number,
+  myWizardSessionProp: number;
 }
 
 interface MySession extends Scenes.WizardSession<MyWizardSession> {
-    mySessionProp: number,
-    lastUpdate: number,
-    cursor: number
+  plan: string;
+  payment: string;
+  mySessionProp: number;
+  UserProposal: UserProposalI;
+  proposals: any;
+  cursor: number;
+  data: any
 }
 
-export default interface context extends Context {
-    payment: string,
-    plan: string,
-    session: MySession
-    scene: Scenes.SceneContextScene<context, MyWizardSession>
-    wizard: Scenes.WizardContextWizard<context>
+export interface MyContext extends Context {
+  match: any;
+  update: any;
+  telegram: any;
+  session: MySession;
+  scene: Scenes.SceneContextScene<MyContext, MyWizardSession>;
+  wizard: Scenes.WizardContextWizard<MyContext>;
+}
+
+export interface UserProposalI extends User {
+  plan: string;
+  payment: string;
+  subscription: boolean;
+  message: any;
+  lastModified: number
 }

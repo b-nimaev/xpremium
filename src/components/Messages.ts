@@ -1,4 +1,4 @@
-export let title = {
+export const title = {
   forex: 'Forex signals - 49$ per month',
   crypto: 'Crypto signals - 49$ per month',
   copy: 'Copy signals - 149$ per month',
@@ -6,7 +6,7 @@ export let title = {
 
 let confirmationMessage = "<b>Send in chat proof of payment. It can be a screenshot, payment ID or something that will confirm your payment.</b>"
 
-export default {
+export const Messages = {
   greetingMessage: `In order to become a member of premium signals, you need to choose which subscription you need. Daily receipt of 5 to 10 signals!\n\n By purchasing our signals, you get access to trading strategies that are a guaranteed guarantee of your success! If our signals do not bring you profit, we will return the funds!\n\n Choose from the list below 👇`,
   adminGreetingMessage: `<b>Admin section</b>\n\n`,
 

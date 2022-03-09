@@ -43,16 +43,8 @@ export default async function (ctx) {
     let plan = ctx.match[1]
     if (typeof(plan) == "string") {
       ctx.session.plan = ctx.match[1]
-      ctx.editMessageText(messages[ctx.session.plan], extra)
-    } else {
-      try {
-        ctx.editMessageText(messages[ctx.session.plan], extra)
-      } catch (err) {
-        console.log(err)
-      }
     }
-    console.log(plan)
+    ctx.editMessageText(messages[ctx.session.plan], extra)
     ctx.answerCbQuery()
-    console.log(ctx.session)
   }
 }
