@@ -41,7 +41,8 @@ if (process.env.mode === "development") {
     // bot.telegram.deleteWebhook();
   })
 } else {
-  bot.telegram.setWebhook(`${process.env.ip}/${secretPath}`)
+  console.log(`${process.env.ip}${secretPath}`)
+  bot.telegram.setWebhook(`https://say-an.result/${secretPath}`)
 }
 
 const app = express();
